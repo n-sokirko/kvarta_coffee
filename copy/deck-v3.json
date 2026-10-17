@@ -1,0 +1,580 @@
+{
+  "_about": "Черновик текста v2 для лендинга «Кварта». Только факты из ТЗ. status: brief = из ТЗ, derived = следует из ТЗ, ui = интерфейс, confirm = нужно подтвердить у заказчика. max = безопасная длина в знаках.",
+  "slots": [
+    {
+      "id": "head.title",
+      "text": "Кварта: обжарка кофе в Минске",
+      "max": 60,
+      "status": "derived"
+    },
+    {
+      "id": "hd.logo.aria",
+      "text": "Кварта, на главную",
+      "status": "ui"
+    },
+    {
+      "id": "hd.nav.coffee",
+      "text": "Кофе",
+      "status": "ui"
+    },
+    {
+      "id": "hd.nav.delivery",
+      "text": "Доставка",
+      "status": "ui"
+    },
+    {
+      "id": "hd.nav.sub",
+      "text": "Подписка",
+      "status": "ui"
+    },
+    {
+      "id": "hd.nav.about",
+      "text": "О нас",
+      "status": "ui"
+    },
+    {
+      "id": "hd.btn",
+      "text": "Оставить заявку",
+      "max": 16,
+      "status": "ui"
+    },
+    {
+      "id": "hero.kick",
+      "text": "Обжарка кофе в Минске",
+      "max": 40,
+      "status": "derived"
+    },
+    {
+      "id": "hero.h1",
+      "text": "Жарим в четверг, привозим в пятницу",
+      "max": 50,
+      "status": "brief"
+    },
+    {
+      "id": "hero.lead",
+      "text": "Привозим по Минску, кофе у вас через 1–3 дня после обжарки. Оставьте заявку, мы перезвоним.",
+      "max": 150,
+      "status": "confirm"
+    },
+    {
+      "id": "hero.btn1",
+      "text": "Оставить заявку",
+      "max": 22,
+      "status": "ui"
+    },
+    {
+      "id": "hero.btn2",
+      "text": "Выбрать кофе",
+      "max": 22,
+      "status": "ui"
+    },
+    {
+      "id": "hero.stamp",
+      "text": "жарим по 5 кг",
+      "max": 18,
+      "status": "brief"
+    },
+    {
+      "id": "sA.aria",
+      "text": "Как зерно становится кофе",
+      "status": "ui"
+    },
+    {
+      "id": "sA.1.h",
+      "text": "Зерно из трёх стран",
+      "max": 36,
+      "status": "derived"
+    },
+    {
+      "id": "sA.1.p",
+      "text": "Эфиопия, Колумбия и Бразилия.",
+      "max": 90,
+      "status": "derived"
+    },
+    {
+      "id": "sA.2.h",
+      "text": "Жарим партиями по 5 кг",
+      "max": 36,
+      "status": "brief"
+    },
+    {
+      "id": "sA.3.h",
+      "text": "Во вкусе: цветы, карамель, орех",
+      "max": 36,
+      "status": "derived"
+    },
+    {
+      "id": "sA.4.h",
+      "text": "Кофе у вас через 1–3 дня",
+      "max": 36,
+      "status": "confirm"
+    },
+    {
+      "id": "fresh.big",
+      "text": "1–3",
+      "status": "brief"
+    },
+    {
+      "id": "fresh.small",
+      "text": "дня от обжарки до вас",
+      "max": 40,
+      "status": "brief"
+    },
+    {
+      "id": "fresh.h",
+      "text": "Кофе быстро выдыхается",
+      "max": 45,
+      "status": "external"
+    },
+    {
+      "id": "fresh.p1",
+      "text": "Жарим по четвергам, а в пятницу уже развозим по Минску.",
+      "max": 160,
+      "status": "brief"
+    },
+    {
+      "id": "fresh.week.t",
+      "text": "жарим",
+      "max": 6,
+      "status": "brief"
+    },
+    {
+      "id": "fresh.week.f",
+      "text": "везём",
+      "max": 6,
+      "status": "brief"
+    },
+    {
+      "id": "shop.h",
+      "text": "Три кофе по 250 г и дрип-пакеты",
+      "max": 45,
+      "status": "brief"
+    },
+    {
+      "id": "shop.intro",
+      "text": "Если не знаете, какой кофе взять, напишите в комментарии к заявке, и мы подскажем.",
+      "max": 100,
+      "status": "confirm"
+    },
+    {
+      "id": "shop.eth.name",
+      "text": "Эфиопия Иргачеффе",
+      "status": "brief"
+    },
+    {
+      "id": "shop.eth.notes",
+      "text": "Цветочный, бергамот, светлая обжарка",
+      "status": "brief"
+    },
+    {
+      "id": "shop.eth.words",
+      "text": "цветочный, бергамот",
+      "max": 30,
+      "status": "brief"
+    },
+    {
+      "id": "shop.eth.blurb",
+      "text": "Обжарка светлая.",
+      "max": 60,
+      "status": "brief"
+    },
+    {
+      "id": "shop.col.name",
+      "text": "Колумбия Уила",
+      "status": "brief"
+    },
+    {
+      "id": "shop.col.notes",
+      "text": "Карамель, красное яблоко",
+      "status": "brief"
+    },
+    {
+      "id": "shop.col.words",
+      "text": "карамель, красное яблоко",
+      "max": 30,
+      "status": "brief"
+    },
+    {
+      "id": "shop.col.blurb",
+      "text": "",
+      "max": 60,
+      "status": "brief"
+    },
+    {
+      "id": "shop.bra.name",
+      "text": "Бразилия Серрадо",
+      "status": "brief"
+    },
+    {
+      "id": "shop.bra.notes",
+      "text": "Орех, шоколад, под эспрессо",
+      "status": "brief"
+    },
+    {
+      "id": "shop.bra.words",
+      "text": "орех, шоколад",
+      "max": 30,
+      "status": "brief"
+    },
+    {
+      "id": "shop.bra.blurb",
+      "text": "Подходит для эспрессо.",
+      "max": 60,
+      "status": "brief"
+    },
+    {
+      "id": "shop.drip.name",
+      "text": "Дрип-пакеты, ассорти",
+      "status": "brief"
+    },
+    {
+      "id": "shop.drip.notes",
+      "text": "10 пакетов",
+      "status": "brief"
+    },
+    {
+      "id": "shop.drip.words",
+      "text": "один пакет на кружку",
+      "max": 30,
+      "status": "external"
+    },
+    {
+      "id": "shop.drip.blurb",
+      "text": "Повесьте на кружку, залейте горячей водой. Молоть не нужно.",
+      "max": 60,
+      "status": "external"
+    },
+    {
+      "id": "shop.btn",
+      "text": "Оставить заявку",
+      "status": "ui"
+    },
+    {
+      "id": "sub.h",
+      "text": "Две пачки по 250 г раз в месяц",
+      "max": 45,
+      "status": "brief"
+    },
+    {
+      "id": "sub.price",
+      "text": "54 BYN / мес",
+      "status": "brief"
+    },
+    {
+      "id": "sub.li1",
+      "text": "Доставка бесплатно",
+      "status": "brief"
+    },
+    {
+      "id": "sub.li2",
+      "text": "Оставьте заявку, а какой кофе вам привозить, обсудим по телефону.",
+      "max": 90,
+      "status": "confirm"
+    },
+    {
+      "id": "sub.btn",
+      "text": "Подписаться",
+      "max": 22,
+      "status": "ui"
+    },
+    {
+      "id": "sB.aria",
+      "text": "Как кофе добирается до вас",
+      "status": "ui"
+    },
+    {
+      "id": "sB.1.h",
+      "text": "Сначала заявка и звонок",
+      "max": 36,
+      "status": "confirm"
+    },
+    {
+      "id": "sB.1.p",
+      "text": "Адрес в заявке не нужен: позвоним и спросим, куда ехать.",
+      "max": 90,
+      "status": "confirm"
+    },
+    {
+      "id": "sB.2.h",
+      "text": "В пятницу развозим по Минску",
+      "max": 36,
+      "status": "brief"
+    },
+    {
+      "id": "sB.3.h",
+      "text": "От 50 BYN доставка бесплатная",
+      "max": 36,
+      "status": "brief"
+    },
+    {
+      "id": "sB.3.p",
+      "text": "Если заказ меньше, условия доставки назовём по телефону.",
+      "max": 90,
+      "status": "confirm"
+    },
+    {
+      "id": "sB.4.h",
+      "text": "Привезли, можно заваривать",
+      "max": 40,
+      "status": "brief"
+    },
+    {
+      "id": "meth.h",
+      "text": "Доставка и самовывоз",
+      "max": 45,
+      "status": "brief"
+    },
+    {
+      "id": "meth.1.when",
+      "text": "По пятницам",
+      "max": 14,
+      "status": "brief"
+    },
+    {
+      "id": "meth.1.h",
+      "text": "Доставка по Минску",
+      "status": "brief"
+    },
+    {
+      "id": "meth.1.hl",
+      "text": "Бесплатно от 50 BYN",
+      "max": 34,
+      "status": "brief"
+    },
+    {
+      "id": "meth.1.nn",
+      "text": "Если заказ меньше 50 BYN, условия доставки назовём по телефону.",
+      "status": "confirm"
+    },
+    {
+      "id": "meth.2.when",
+      "text": "Каждый день",
+      "max": 14,
+      "status": "derived"
+    },
+    {
+      "id": "meth.2.h",
+      "text": "Самовывоз",
+      "status": "brief"
+    },
+    {
+      "id": "meth.2.hl",
+      "text": "ул. Короля, 9",
+      "max": 34,
+      "status": "brief"
+    },
+    {
+      "id": "meth.2.li1",
+      "text": "Пн–пт: 8:00–20:00",
+      "status": "brief"
+    },
+    {
+      "id": "meth.2.li2",
+      "text": "Сб–вс: 10:00–18:00",
+      "status": "brief"
+    },
+    {
+      "id": "about.h",
+      "text": "Мы, Аня и Дмитрий, раньше работали бариста",
+      "max": 50,
+      "status": "brief"
+    },
+    {
+      "id": "about.p",
+      "text": "С 2019 года жарим кофе партиями по 5 кг.",
+      "max": 120,
+      "status": "brief"
+    },
+    {
+      "id": "about.seal.b",
+      "text": "2019",
+      "status": "brief"
+    },
+    {
+      "id": "about.seal.t",
+      "text": "Минск",
+      "max": 24,
+      "status": "brief"
+    },
+    {
+      "id": "lead.h",
+      "text": "Оставьте заявку",
+      "max": 45,
+      "status": "brief"
+    },
+    {
+      "id": "lead.intro",
+      "text": "Мы перезвоним по номеру из заявки и договоримся о заказе. Платить на сайте не нужно.",
+      "max": 140,
+      "status": "brief"
+    },
+    {
+      "id": "lead.ct.addr",
+      "text": "Минск, ул. Короля, 9 (самовывоз)",
+      "status": "brief"
+    },
+    {
+      "id": "lead.ct.hours1",
+      "text": "Пн–пт: 8:00–20:00",
+      "status": "brief"
+    },
+    {
+      "id": "lead.ct.hours2",
+      "text": "Сб–вс: 10:00–18:00",
+      "status": "brief"
+    },
+    {
+      "id": "lead.ct.phone",
+      "text": "[ТЕЛЕФОН]",
+      "status": "placeholder"
+    },
+    {
+      "id": "form.name.label",
+      "text": "Имя",
+      "status": "ui"
+    },
+    {
+      "id": "form.name.ph",
+      "text": "Как вас зовут",
+      "max": 30,
+      "status": "ui"
+    },
+    {
+      "id": "form.name.err",
+      "text": "Напишите, как к вам обращаться.",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.label",
+      "text": "Телефон",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.ph",
+      "text": "+375 (29) 123-45-67",
+      "max": 30,
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.hint",
+      "text": "Белорусский номер, мобильный или городской",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.err.empty",
+      "text": "Укажите телефон, чтобы мы могли перезвонить.",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.err.format",
+      "text": "В номере есть буквы или лишние знаки. Пример: +375 (29) 123-45-67.",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.err.country",
+      "text": "Нужен белорусский номер, он начинается с +375.",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.err.length",
+      "text": "После +375 должно быть ровно девять цифр. Проверьте номер.",
+      "status": "ui"
+    },
+    {
+      "id": "form.phone.err.code",
+      "text": "Проверьте код после +375: мобильные 25, 29, 33, 44, городские 15–17, 21–23.",
+      "status": "ui"
+    },
+    {
+      "id": "form.interest.legend",
+      "text": "Что вас интересует",
+      "status": "ui"
+    },
+    {
+      "id": "form.interest.1",
+      "text": "Подписка",
+      "status": "brief"
+    },
+    {
+      "id": "form.interest.2",
+      "text": "Разовый заказ",
+      "status": "brief"
+    },
+    {
+      "id": "form.interest.3",
+      "text": "Вопрос",
+      "status": "brief"
+    },
+    {
+      "id": "form.interest.err",
+      "text": "Выберите один из вариантов.",
+      "status": "ui"
+    },
+    {
+      "id": "form.comment.label",
+      "text": "Комментарий",
+      "status": "ui"
+    },
+    {
+      "id": "form.comment.ph",
+      "text": "Какой кофе, сколько пачек или о чём спросить",
+      "max": 46,
+      "status": "ui"
+    },
+    {
+      "id": "form.btn",
+      "text": "Отправить заявку",
+      "status": "ui"
+    },
+    {
+      "id": "form.btn.sending",
+      "text": "Отправляем",
+      "status": "ui"
+    },
+    {
+      "id": "form.fail.b",
+      "text": "Заявка не ушла",
+      "status": "ui"
+    },
+    {
+      "id": "form.fail.p",
+      "text": "Попробуйте ещё раз. Если опять не получится, позвоните нам: номер в контактах.",
+      "status": "confirm"
+    },
+    {
+      "id": "form.ok.b",
+      "text": "Заявка у нас",
+      "status": "ui"
+    },
+    {
+      "id": "form.ok.p",
+      "text": "Спасибо. Перезвоним на ваш номер.",
+      "status": "confirm"
+    },
+    {
+      "id": "form.ok.again",
+      "text": "Оставить ещё одну заявку",
+      "status": "ui"
+    },
+    {
+      "id": "form.dup.b",
+      "text": "Заявка уже у нас",
+      "status": "ui"
+    },
+    {
+      "id": "form.dup.p",
+      "text": "Заявка с этого номера пришла меньше 10 минут назад, повторять не нужно. Перезвоним. Если хотите что-то добавить, позвоните нам: номер в контактах.",
+      "status": "confirm"
+    },
+    {
+      "id": "form.dup.back",
+      "text": "Вернуться к форме",
+      "status": "ui"
+    },
+    {
+      "id": "ft.copy",
+      "text": "© «Кварта», Минск",
+      "status": "ui"
+    }
+  ]
+}

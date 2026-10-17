@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>models test</title>
+<style>
+html,body{margin:0;height:100%;background:#cddde2;font:12px monospace;color:#333;overflow:hidden}
+#c{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#t{position:absolute;left:6px;top:4px;z-index:2;background:rgba(255,255,255,.7);padding:1px 4px}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Podkova:wght@500;700;800&display=swap">
+</head><body>
+<div id="t"></div><canvas id="c"></canvas>
+<script src="kv-gl.js?v=4"></script><script src="kv-models.js?v=4"></script>
+<script>
+var K = KvGL, T = document.getElementById('t');
+var q = new URLSearchParams(location.search), s = q.get('s') || 'k', tm = parseFloat(q.get('t') || '1.0');
+var r = K.create(document.getElementById('c'), { maxDpr: 1.5, shadowSize: 2048 });
+if (!r) { T.textContent = 'NO GL / shader error'; throw new Error('no gl'); }
+r.setDecals(K.drawDecals()); r.resize();
+function go() {
+  var dpr = 1;
+  if (s === 'k') {
+    document.body.style.background = '#2a1b13';
+    r.begin({ time: tm });
+    r.draw({ mesh: 'kettle', pos: [-1.6, -0.6, 0], rx: 0.3, ry: -0.5 + tm * 0.3, s: 1.0 });
+    r.draw({ mesh: 'wheel', pos: [1.0, 0.8, 0], rx: 0.2, ry: 0.6 + tm * 0.2, s: 1.6 });
+    r.draw({ mesh: 'stamp', pos: [1.6, -1.0, 0], rx: 0.3, ry: 0.5, s: 1.8 });
+    T.textContent = 'kettle, wheel, stamp';
+  } else if (s === 'v') {
+    r.begin({ time: tm });
+    r.draw({ mesh: 'vanD', pos: [0, 0.3, 0], rx: 0.25, ry: -0.6 + tm * 0.2, s: 0.9, emis: [0.8, 0.5] });
+    [[-0.95, 1], [0.9, 1], [-0.95, -1], [0.9, -1]].forEach(function (w) { });
+    T.textContent = 'detailed van (no wheels)';
+  } else if (s === 'v2') {
+    var R = K.mul(K.rot(0.25, 0, 0), K.rot(0, -0.55 + tm * 0.15, 0)), sc = 0.9;
+    r.begin({ time: tm });
+    r.draw({ mesh: 'vanD', rot: R, pos: [0, 0, 0], s: sc, emis: [0.8, 0.5] });
+    K.VAN_WHEELS.forEach(function (w) {
+      [1, -1].forEach(function (z) {
+        var off = K.mulVec(R, [w[0] * sc, w[1] * sc, z * 0.5 * sc]);
+        r.draw({ mesh: 'wheel', rot: K.mul(R, K.rot(0, 0, -tm * 3)), pos: off, s: 0.9 * sc });
+      });
+    });
+    T.textContent = 'van with wheels';
+  } else if (s === 'h') {
+    r.begin({ time: tm });
+    var Rh = K.rot(0.28, -0.5 + tm * 0.1, 0);
+    r.draw({ mesh: 'houseH', rot: Rh, pos: [-1.5, -0.8, 0], s: 1.5 });
+    var door = K.mul(Rh, K.rot(0, -1.3, 0));
+    var hinge = K.mulVec(Rh, [-0.17 * 1.5, 0.06 * 1.5, 0.7 * 1.5]);
+    r.draw({ mesh: 'houseDoor', rot: door, pos: [-1.5 + hinge[0], -0.8 + hinge[1], hinge[2]], s: 1.5 });
+    r.draw({ mesh: 'houseW', rot: Rh, pos: [1.7, -0.8, 0], s: 1.5 });
+    T.textContent = 'houses (home with open door, workshop)';
+  } else if (s === 'c') {
+    r.begin({ time: tm });
+    var P = [0, -1.3, 0], Rc = K.rot(0.15, -0.5, 0), sc2 = 2.4, sw = Math.sin(tm * 4) * 0.5;
+    function at(v) { var o = K.mulVec(Rc, [v[0] * sc2, v[1] * sc2, v[2] * sc2]); return [P[0] + o[0], P[1] + o[1], P[2] + o[2]]; }
+    r.draw({ mesh: 'cBody', rot: Rc, pos: at([0, 0.02 * Math.abs(sw), 0]), s: sc2 });
+    [[0.075, 1], [-0.075, -1]].forEach(function (l) { r.draw({ mesh: 'cLeg', rot: K.mul(Rc, K.rot(sw * l[1], 0, 0)), pos: at([l[0], 0.41, 0]), s: sc2 }); });
+    [[0.19, -1], [-0.19, 1]].forEach(function (l) { r.draw({ mesh: 'cArm', rot: K.mul(Rc, K.rot(sw * l[1], 0, 0)), pos: at([l[0], 0.7, 0]), s: sc2 }); });
+    ['car0', 'car1', 'car2', 'car3'].forEach(function (n, i) { r.draw({ mesh: n, pos: [-2 + i * 1.3, 1.2, 0], rx: 0.5, ry: -0.6, s: 1.2 }); });
+    T.textContent = 'courier + cars';
+  } else if (s === 'city') {
+    var C = K.makeCity();
+    var Rw = K.mul(K.rot(0.95, 0, 0), K.rot(0, -0.6, 0)), S = 0.28;
+    function W(x, y, z) { return K.mulVec(Rw, [x * S, y * S, z * S]); }
+    var ldir = [-0.55, 0.78, 0.62];
+    r.beginShadow({ dir: ldir, center: [0, 0, 0], radius: 7, depth: 14, time: tm });
+    r.draw({ mesh: 'city', rot: Rw, pos: [0, 0, 0], s: S, grow: 1, sway: 1 });
+    r.endShadow();
+    r.begin({ time: tm, shadow: true });
+    var key = K.mulVecT(Rw, ldir);
+    r.draw({ mesh: 'quad', mode: 1, rot: Rw, pos: [0, 0, 0], s: S, ldl: key });
+    r.draw({ mesh: 'city', rot: Rw, pos: [0, 0, 0], s: S, grow: 1, sway: 1, emis: [0.5, 0.5] });
+    r.draw({ mesh: 'houseH', rot: K.mul(Rw, K.rot(0, -Math.PI / 2, 0)), pos: W(C.home[0], 0, C.home[1]), s: 1.3 * S });
+    r.draw({ mesh: 'houseW', rot: K.mul(Rw, K.rot(0, Math.PI / 2, 0)), pos: W(C.workshop[0], 0, C.workshop[1]), s: 1.3 * S });
+    T.textContent = 'city with sun shadows';
+  }
+}
+document.fonts.ready.then(function () { r.setDecals(K.drawDecals()); go(); });
+go();
+</script></body></html>

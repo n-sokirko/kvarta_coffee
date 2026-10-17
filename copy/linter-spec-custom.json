@@ -1,0 +1,81 @@
+[
+  {
+    "id": "rhy-uniform-sentences",
+    "severity": "warning",
+    "category": "rhythm",
+    "mode": "metric",
+    "pattern": "(?<!(?<!\\p{L})(?:ул|г|д|пр|им|тел|стр|кв|оф|корп|руб|коп|мин|сек|ч|т|п|см|мм)\\.)(?<=[.!?…])\\s+(?=[\\p{Lu}«\"“(\\d])",
+    "flags": "u",
+    "message": "Предложения почти одной длины («метроном»). Живой текст чередует длинные и короткие.",
+    "example": "Шесть предложений по 7–9 слов подряд.",
+    "exampleTestable": false,
+    "threshold": {
+      "minSentences": 6,
+      "maxCoefficientOfVariation": 0.35,
+      "note": "CV = стандартное отклонение длины предложения в словах / среднее"
+    },
+    "scope": "секция или страница, не меньше 6 предложений"
+  },
+  {
+    "id": "rhy-three-sentence-paragraphs",
+    "severity": "warning",
+    "category": "rhythm",
+    "mode": "metric",
+    "pattern": "(?<!(?<!\\p{L})(?:ул|г|д|пр|им|тел|стр|кв|оф|корп|руб|коп|мин|сек|ч|т|п|см|мм)\\.)(?<=[.!?…])\\s+(?=[\\p{Lu}«\"“(\\d])",
+    "flags": "u",
+    "message": "Больше 60% абзацев состоят ровно из трёх предложений: всё складное и одинаковое.",
+    "example": "Пять абзацев подряд по три предложения.",
+    "exampleTestable": false,
+    "threshold": {
+      "minParagraphs": 5,
+      "maxShareOfExactlyThreeSentences": 0.6
+    },
+    "scope": "страница, не меньше 5 абзацев основного текста"
+  },
+  {
+    "id": "sem-fact-density",
+    "severity": "warning",
+    "category": "semantics",
+    "mode": "metric",
+    "pattern": "\\d+(?:[.,:–-]\\d+)*|(?<=[\\p{Ll},;:]\\s)\\p{Lu}\\p{Ll}{2,}",
+    "flags": "u",
+    "message": "На странице мало проверяемых фактов (цифры, имена, адреса, даты). Текст держится на оценках.",
+    "example": "Страница без единой цифры и без названий.",
+    "exampleTestable": false,
+    "threshold": {
+      "minFactTokensPer100Words": 5,
+      "note": "Факт-токен: число (в том числе диапазон, время, цена) или слово с большой буквы не в начале предложения. Откалибровано на двух выборках (нейрослоп 0 на 100 слов, чистый текст сайта 14.8), порог 5 это гипотеза."
+    },
+    "scope": "страница целиком"
+  },
+  {
+    "id": "str-h2-sub-three-cta",
+    "severity": "warning",
+    "category": "structure",
+    "mode": "signature",
+    "pattern": "^h[12](?: p)?(?: (?:ul|ol)3)(?: (?:a|button))?$",
+    "flags": "u",
+    "message": "Секция устроена по шаблону «заголовок + подзаголовок + три пункта (+ кнопка)». Если так построено три секции и больше, страница выглядит сгенерированной.",
+    "example": "h2 p ul3 a",
+    "threshold": {
+      "minSections": 3,
+      "note": "Сработать, если так устроены 3 и больше секций страницы."
+    },
+    "input": "сигнатура секции: теги верхнего уровня через пробел, например \"h2 p ul3 a\" (ulN или olN, N = число пунктов)"
+  },
+  {
+    "id": "str-every-section-cta",
+    "severity": "warning",
+    "category": "structure",
+    "mode": "signature",
+    "pattern": "(?: a| button)$",
+    "flags": "u",
+    "message": "Каждая вторая-третья секция заканчивается призывом. На лендинге с одной целью допустимо 2-3 кнопки, но не после каждого блока.",
+    "example": "h2 p a",
+    "threshold": {
+      "minSections": 4,
+      "minShareEndingWithCta": 0.6
+    },
+    "input": "сигнатура секции, как выше"
+  }
+]
