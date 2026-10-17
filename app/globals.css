@@ -222,3 +222,5 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
   .st { position: relative; opacity: 1; transform: none; margin-bottom: 28px; pointer-events: auto; }
   .sn { display: none; }
 }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
