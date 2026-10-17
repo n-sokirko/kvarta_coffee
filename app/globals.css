@@ -19,7 +19,7 @@ body { margin: 0; background: #f3eee5; }
 .kv section { scroll-margin-top: 56px; }
 .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 .mono { font-family: var(--fm); font-size: 12px; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
-.grain { background-image: url(/grain.png); background-size: 192px 192px; }
+.grain { background-image: url(/grain.webp); background-size: 192px 192px; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px;
   border: 2px solid var(--flame); border-radius: 10px; background: var(--flame); color: var(--ink);
