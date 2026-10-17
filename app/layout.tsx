@@ -5,7 +5,7 @@ const TITLE = 'Кварта: обжарка кофе в Минске';
 const DESC = 'Небольшая обжарка в Минске. Жарим в четверг, привозим в пятницу. Три кофе по 250 г, дрип-пакеты, подписка.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kvarta-coffee.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kvarta-coffee-pi.vercel.app'),
   title: TITLE,
   description: DESC,
   openGraph: {

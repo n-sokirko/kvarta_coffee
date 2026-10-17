@@ -1,7 +1,7 @@
 body { margin: 0; background: #f3eee5; }
 .kv {
   --ink: #1f1610; --ink2: #55463a; --paper: #f3eee5; --paper2: #e9e0cc; --kraft: #c9a574; --kraftd: #a98456;
-  --flame: #e2562b; --flamed: #b8421d; --sky: #cfdde2; --skyd: #35505e; --cream: #f8f1e3; --espresso: #2a1b13;
+  --flame: #e2562b; --flamed: #9c3614; --sky: #cfdde2; --skyd: #35505e; --cream: #f8f1e3; --espresso: #2a1b13;
   --fd: 'Podkova', 'Rockwell', 'Roboto Slab', Georgia, serif;
   --fb: 'Golos Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --fm: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
@@ -224,3 +224,6 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
 }
 
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.hero-art { background: url(/hero-poster.webp) center / contain no-repeat; }
+.kv.kv-live .hero-art { background-image: none; }
