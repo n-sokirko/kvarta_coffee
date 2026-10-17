@@ -227,3 +227,5 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
 
 .hero-art { background: url(/hero-poster.webp) center / contain no-repeat; }
 .kv.kv-live .hero-art { background-image: none; }
+
+.packimg { display: block; width: min(100%, 320px); height: auto; margin-top: 10px; filter: drop-shadow(0 10px 14px rgba(31, 22, 16, .25)); }

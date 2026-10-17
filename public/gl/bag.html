@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><title>bag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Podkova:wght@500;700;800&display=swap">
+<style>html,body{margin:0;background:#f3eee5}canvas{display:block;width:900px;height:900px}</style></head><body>
+<canvas id="c" width="900" height="900"></canvas>
+<script src="kv-gl.js?v=c"></script><script src="kv-models.js?v=c"></script>
+<script>
+var K=KvGL, c=document.getElementById('c');
+var r=K.create(c,{maxDpr:1,shadowSize:2048});
+function go(){
+  r.setDecals(K.drawDecals()); r.resize();
+  var q=new URLSearchParams(location.search), ry=parseFloat(q.get('ry')||'-0.45'), rx=parseFloat(q.get('rx')||'0.12'), s=parseFloat(q.get('s')||'1.0');
+  r.begin({time:0});
+  r.draw({a:'bag',q:'hi',pos:[-0.55,-0.05,0],rx:rx,ry:ry,s:s,decal:true,paper:1});
+  r.draw({a:'bag',q:'hi',pos:[0.6,-0.05,-0.3],rx:rx,ry:ry+0.6,s:s*0.95,decal:true,paper:1});
+  window.__done=true;
+}
+document.fonts.ready.then(function(){document.fonts.load('800 60px Podkova').then(go,go)});
+</script></body></html>
