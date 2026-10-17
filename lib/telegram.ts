@@ -1,4 +1,5 @@
 import type { Lead } from './store';
+import { heardLabel } from './heard';
 
 const LABEL = { subscription: 'Подписка', order: 'Разовый заказ', question: 'Вопрос' } as const;
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -25,7 +26,8 @@ export async function notifyTelegram(lead: Lead): Promise<void> {
     'Интересует: ' + LABEL[lead.interest],
     orderText(lead),
     lead.comment ? 'Комментарий: ' + esc(lead.comment) : '',
-    'Откуда: ' + esc(from),
+    lead.heard ? 'Сказал, что узнал из: ' + esc(heardLabel(lead.heard)) : '',
+    'Метки и переход: ' + esc(from),
     s.landing ? 'Страница входа: ' + esc(s.landing) : '',
   ]
     .filter(Boolean)

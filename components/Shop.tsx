@@ -42,7 +42,7 @@ export default function Shop() {
           </div>
           <div className="prev" aria-live="polite">
             <p className="mono">{cur.weight}</p>
-            <img className="prevph" key={cur.id} src={'/menu/' + cur.id + '.webp'} alt={PHOTO_ALT[cur.id] || cur.name} width={640} height={cur.id === 'drip' ? 568 : 640} decoding="async" />
+            <img className="prevph" key={cur.id} src={'/menu/' + cur.id + '.webp'} alt={PHOTO_ALT[cur.id] || cur.name} width={720} height={720} decoding="async" />
             <p className="words">{cur.words}</p>
             <p className="bl2">{cur.blurb}</p>
             <p className="pp"><span>{cur.name}</span><b>{cur.price}</b></p>

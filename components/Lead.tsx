@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PHONE_ERR, TXT } from '@/lib/content';
 import { kvNormalizePhone, kvFormatPhoneInput, kvCreateDedupe } from '@/lib/phone';
 import { getSource } from '@/lib/source';
+import { HEARD, guessHeard } from '@/lib/heard';
 import { CATALOG, FREE_DELIVERY_FROM, MAX_QTY } from '@/lib/catalog';
 
 type Status = 'form' | 'sending' | 'ok' | 'dup' | 'fail';
@@ -23,6 +24,7 @@ export default function Lead() {
   const [phone, setPhone] = useState('');
   const [interest, setInterestState] = useState<Interest>('order');
   const [comment, setComment] = useState('');
+  const [heard, setHeard] = useState('');
   const [company, setCompany] = useState(''); // поле-ловушка для ботов
   const [errName, setErrName] = useState(false);
   const [errPhone, setErrPhone] = useState('');
@@ -30,6 +32,8 @@ export default function Lead() {
   const [qty, setQty] = useState<Record<string, number>>({});
   const [errItems, setErrItems] = useState(false);
   const [status, setStatus] = useState<Status>('form');
+  // если человек пришёл из рекламы или поиска, ответ подставляется сам, его можно поменять
+  useEffect(() => { setHeard((h) => h || guessHeard(getSource())); }, []);
   const total = CATALOG.reduce((sum, c) => sum + (qty[c.id] || 0) * c.price, 0);
   const chosen = CATALOG.filter((c) => (qty[c.id] || 0) > 0);
   const step = (id: string, d: number) => {
@@ -86,7 +90,7 @@ export default function Lead() {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, phone, interest, comment, company, source: getSource(), items: interest === 'order' ? chosen.map((c) => ({ id: c.id, qty: qty[c.id] })) : [] }),
+        body: JSON.stringify({ name, phone, interest, comment, heard, company, source: getSource(), items: interest === 'order' ? chosen.map((c) => ({ id: c.id, qty: qty[c.id] })) : [] }),
         signal: ctrl.signal,
       });
       const data = await res.json().catch(() => ({}));
@@ -182,6 +186,18 @@ export default function Lead() {
                   {errItems && <p className="err">Выберите хотя бы одну позицию.</p>}
                 </fieldset>
               )}
+              <fieldset className="fld">
+                <legend>{TXT.heardLegend}</legend>
+                <div className="chips">
+                  {HEARD.map((o) => (
+                    <label className="chip" key={o.id}>
+                      <input type="radio" name="heard" value={o.id} checked={heard === o.id} onChange={() => setHeard(o.id)} />
+                      <span>{o.label}</span>
+                    </label>
+                  ))}
+                </div>
+                <p className="hint">{TXT.heardHint}</p>
+              </fieldset>
               <div className="fld">
                 <label htmlFor="f-comment">{TXT.commentLabel}</label>
                 <textarea id="f-comment" name="comment" placeholder={TXT.commentPh} value={comment} onChange={(e) => setComment(e.target.value)} />

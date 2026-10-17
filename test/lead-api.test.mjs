@@ -6,7 +6,7 @@ const post = (body) =>
   fetch(BASE + '/api/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }).then(async (r) => ({ status: r.status, json: await r.json() }));
 
 const rnd = () => String(1000000 + Math.floor(Math.random() * 8999999)); // 7 цифр абонента
-const base = (phone) => ({ name: 'Тест', phone, interest: 'order', comment: 'проверка', items: [{ id: 'ethiopia', qty: 2 }, { id: 'drip', qty: 1 }], source: { utm_source: 'instagram', utm_campaign: 'autumn', utm_content: 'banner-2', landing: '/?utm_source=instagram' } });
+const base = (phone) => ({ name: 'Тест', phone, interest: 'order', comment: 'проверка', heard: 'instagram', items: [{ id: 'ethiopia', qty: 2 }, { id: 'drip', qty: 1 }], source: { utm_source: 'instagram', utm_campaign: 'autumn', utm_content: 'banner-2', landing: '/?utm_source=instagram' } });
 
 // 1. неверный номер не принимается, причина названа
 let r = await post(base('+7 916 123-45-67'));

@@ -111,7 +111,7 @@ body { margin: 0; background: #f3eee5; }
 .row.on .nt { color: rgba(248, 241, 227, .78); }
 .prev { position: relative; border: 2px solid var(--ink); border-radius: 12px; background: var(--paper2); padding: 22px; display: grid; gap: 18px; overflow: hidden; }
 .prev .mono { color: var(--flamed); }
-.prevph { display: block; width: calc(100% + 44px); max-width: none; margin: 0 -22px; aspect-ratio: 1 / 1; max-height: 340px; object-fit: cover; object-position: center 35%; background: #1d1612; }
+.prevph { display: block; width: 100%; height: auto; border-radius: 8px; aspect-ratio: 1 / 1; object-fit: cover; background: #1d1612; }
 .prev .mono { margin-top: 0; }
 .prev .words { font: 800 clamp(30px, 8vw, 44px)/1.05 var(--fd); }
 .prev .bl2:empty { display: none; }
@@ -204,7 +204,7 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
   .st { padding-right: 24px; }
   .shop { padding: 112px 0 64px; }
   .shop-in { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: start; }
-  .prev { position: sticky; top: 88px; }
+  .prev { align-self: start; }
   .sub { padding: 56px 0 112px; }
   .tag { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; padding: 44px 48px; align-items: center; }
   .meth { padding: 112px 0; }
@@ -247,3 +247,5 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
 .oi-q output { min-width: 28px; text-align: center; font: 600 18px/1 var(--fm); }
 .ord-sum { margin-top: 10px; font-size: 15px; font-weight: 500; }
 .fld.bad .oi { border-color: #a8311b; }
+
+@media (min-width: 760px) and (min-height: 1000px) { .prev { position: sticky; top: 88px; } }
