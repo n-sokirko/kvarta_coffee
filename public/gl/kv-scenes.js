@@ -40,9 +40,10 @@
     var ry = 0.35 + t * 0.6, rz = -0.35 + 0.06 * Math.sin(t * 0.4);
     r.begin({ time: t });
     if (sel === 'drip') {
-      r.draw({ a: 'bean', q: 'hi', pos: [-1.15, 0.25, 0], rx: -0.25, ry: ry, rz: rz, s: 0.78, roast: 0.38, seed: 11 });
-      r.draw({ a: 'bean', q: 'hi', pos: [0.05, -0.15, 0.3], rx: -0.2, ry: ry * 0.8 + 0.4, rz: rz + 0.2, s: 0.78, roast: 0.62, seed: 12 });
-      r.draw({ a: 'bean', q: 'hi', pos: [1.2, 0.2, 0], rx: -0.25, ry: ry * 1.2 - 0.3, rz: rz + 0.5, s: 0.78, roast: 0.88, seed: 13 });
+      // коробка на 10 пакетов медленно поворачивается, рядом стоит один пакет с ушами для кружки
+      var sw = 0.5 * Math.sin(t * 0.5);
+      r.draw({ a: 'dripBox', q: 'hi', pos: [0.85, -0.1, 0], rx: 0.04, ry: -0.5 + sw, rz: 0, s: 1.7, decal: true, paper: 1 });
+      r.draw({ a: 'sachet', q: 'hi', pos: [-1.3, -0.2, 0.45], rx: 0.04, ry: 0.5 - sw * 0.8, rz: 0.12, s: 1.95, decal: true, paper: 1 });
     } else {
       r.draw({ a: 'bean', q: 'hi', pos: [0, 0, 0], rx: -0.25, ry: ry, rz: rz, s: 1.2, roast: PREVIEW_ROAST[sel] == null ? 0.6 : PREVIEW_ROAST[sel], seed: 5 });
     }

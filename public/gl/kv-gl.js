@@ -211,27 +211,33 @@
   // box pinched towards the top, with pleated side gussets, a rolled-over top, a metal tie and a valve on the back
   var BAG_PLANES = [[1, 0, 0, 0.62], [-1, 0, 0, 0.62], [0, 1, 0, 0.92], [0, -1, 0, 0.92], [0, 0, 1, 0.30], [0, 0, -1, 0.30],
     [0, 0.214, 0.977, 0.314], [0, 0.214, -0.977, 0.314], [0.7, 0.7, 0, 1.12], [-0.7, 0.7, 0, 1.12]];
-  var BAG_KRAFT = [0.80, 0.62, 0.38], BAG_KRAFT_B = [0.72, 0.55, 0.33];
+  var BAG_INK = [0.085, 0.085, 0.092], BAG_INK_B = [0.07, 0.07, 0.077];
   function bagPos(th, ph, o) {
     var n = [0, 0, 0]; dirOf(th, ph, n);
     var r = softPoly(n, BAG_PLANES, 16), x = n[0] * r, y = n[1] * r, z = n[2] * r;
     var side = smoothstep(0.50, 0.60, Math.abs(x)) * (1 - smoothstep(0.64, 0.9, Math.abs(y)));
     x -= (x < 0 ? -1 : 1) * 0.055 * Math.exp(-(z * z) / 0.0049) * side;
     var sz = z < 0 ? -1 : 1, fz = smoothstep(0.02, 0.2, Math.abs(z));
-    z += sz * 0.07 * Math.exp(-Math.pow((y - 0.70) / 0.075, 2)) * fz;
-    z -= sz * 0.028 * Math.exp(-Math.pow((y - 0.60) / 0.013, 2)) * fz;
-    z += sz * 0.022 * smoothstep(0.715, 0.73, y) * (1 - smoothstep(0.775, 0.79, y)) * fz;
+    // верх пакета сплющен в плоский шов; под ним зип-молния: канавка и две дорожки
+    z *= 1 - 0.86 * smoothstep(0.70, 0.86, y);
+    z -= sz * 0.022 * Math.exp(-Math.pow((y - 0.585) / 0.011, 2)) * fz;
+    z += sz * 0.016 * Math.exp(-Math.pow((y - 0.615) / 0.012, 2)) * fz;
+    z += sz * 0.012 * Math.exp(-Math.pow((y - 0.66) / 0.010, 2)) * fz;
+    // рифление термошва и мягкие складки плёнки
+    z += sz * 0.006 * Math.sin(x * 64) * smoothstep(0.84, 0.87, y) * fz;
+    z += sz * 0.011 * Math.sin(5.3 * x + 3.1 * y) * Math.sin(6.4 * y - 2.2 * x + 1.3) * smoothstep(-0.45, 0.45, y) * (1 - smoothstep(0.55, 0.7, y)) * fz;
     if (z < 0) z -= 0.022 * (1 - smoothstep(0.075, 0.09, Math.hypot(x, y - 0.38)));
     o[0] = x; o[1] = y; o[2] = z;
   }
   function bakeBag(g) {
     return bakeAnalytic(g, bagPos, function (i, j, x, y, z, nx, ny, nz, o) {
-      var k = nz > 0 ? BAG_KRAFT : BAG_KRAFT_B, c = [k[0], k[1], k[2]], gl = 0.18, metal = 0;
-      var seal = smoothstep(0.585, 0.6, y) * 0.0; // the roll keeps the kraft colour; shading does the work
-      var tie = smoothstep(0.715, 0.73, y) * (1 - smoothstep(0.775, 0.79, y));
-      if (tie > 0) { c = [mix(c[0], c[0] * 0.62, tie), mix(c[1], c[1] * 0.62, tie), mix(c[2], c[2] * 0.62, tie)]; gl = mix(gl, 0.3, tie); metal = tie * 0.22; } // сгиб сверху: тот же крафт, чуть темнее, без блестящей фольги
+      var k = nz > 0 ? BAG_INK : BAG_INK_B, c = [k[0], k[1], k[2]], gl = 0.22, metal = 0;
+      var zip = smoothstep(0.575, 0.585, y) * (1 - smoothstep(0.67, 0.68, y));
+      if (zip > 0) { c = [mix(c[0], 0.25, zip), mix(c[1], 0.25, zip), mix(c[2], 0.26, zip)]; gl = mix(gl, 0.5, zip); }
+      var seal = smoothstep(0.8, 0.86, y);
+      if (seal > 0) { c = [mix(c[0], 0.11, seal), mix(c[1], 0.11, seal), mix(c[2], 0.115, seal)]; gl = mix(gl, 0.34, seal); }
       var vm = nz < 0 ? 1 - smoothstep(0.075, 0.09, Math.hypot(x, y - 0.38)) : 0;
-      if (vm > 0) { c = [mix(c[0], 0.92, vm), mix(c[1], 0.92, vm), mix(c[2], 0.9, vm)]; gl = mix(gl, 0.45, vm); }
+      if (vm > 0) { c = [mix(c[0], 0.36, vm), mix(c[1], 0.36, vm), mix(c[2], 0.37, vm)]; gl = mix(gl, 0.6, vm); }
       o[0] = c[0]; o[1] = c[1]; o[2] = c[2]; o[3] = gl; o[4] = 0; o[5] = metal;
       o[7] = (nz > 0.55 && Math.abs(x) < 0.6 && y < 0.57) ? 1 : 0;
     });
@@ -363,7 +369,7 @@
 
   /* ------------------------------------------------------------- decal atlas */
   // Canvas2D art for the decals. Atlas (1024x1024) regions in px: bag label 0,0..600,890; van logo; workshop sign.
-  var ATLAS = { logo: [620, 0, 1020, 200], sign: [620, 230, 1020, 430] };
+  var ATLAS = { logo: [620, 0, 1020, 200], sign: [620, 230, 1020, 430], box: [620, 450, 1020, 850], band: [620, 860, 1020, 1020] };
   function drawDecals() {
     var mk = function () { var c = document.createElement('canvas'); c.width = 1024; c.height = 1024; return c; };
     var lab = mk(), stp = mk(), a = lab.getContext('2d'), b = stp.getContext('2d');
@@ -396,6 +402,30 @@
     a.strokeStyle = '#f8f1e3'; a.lineWidth = 4; a.strokeRect(10, 30, 380, 130);
     a.fillStyle = '#f8f1e3'; a.textAlign = 'center'; a.font = '800 84px ' + DISPLAY; a.fillText('Кварта', 200, 112);
     a.font = '500 22px ' + MONO; a.fillStyle = '#f0a07e'; a.fillText('ОБЖАРКА КОФЕ', 200, 146);
+    a.restore();
+    // коробка дрип-пакетов, лицевая сторона
+    var Bx = ATLAS.box;
+    a.save(); a.translate(Bx[0], Bx[1]);
+    a.fillStyle = '#eadfc4'; a.fillRect(0, 0, 400, 400);
+    a.strokeStyle = '#1f1610'; a.lineWidth = 5; a.strokeRect(16, 16, 368, 368);
+    a.fillStyle = '#1f1610'; a.textAlign = 'left'; a.font = '800 92px ' + DISPLAY; a.fillText('Кварта', 38, 118);
+    a.font = '500 20px ' + MONO; a.fillStyle = '#55463a'; a.fillText('ОБЖАРКА · МИНСК', 42, 152);
+    a.fillStyle = '#1f1610'; a.fillRect(40, 176, 320, 3);
+    a.font = '700 50px ' + DISPLAY; a.fillStyle = '#1f1610'; a.fillText('Дрип-', 38, 246); a.fillText('пакеты', 38, 298);
+    a.font = '500 20px ' + MONO; a.fillStyle = '#55463a'; a.fillText('АССОРТИ · 12 Г', 42, 338);
+    a.fillStyle = '#e2562b'; a.beginPath(); a.arc(305, 285, 58, 0, 2 * PI); a.fill();
+    a.fillStyle = '#f8f1e3'; a.textAlign = 'center'; a.font = '800 66px ' + DISPLAY; a.fillText('10', 305, 292);
+    a.font = '500 17px ' + MONO; a.fillText('ПАКЕТОВ', 305, 320);
+    a.restore();
+    // лента на лицевой стороне дрип-пакета
+    var Bd = ATLAS.band;
+    a.save(); a.translate(Bd[0], Bd[1]);
+    a.fillStyle = '#f3ecdc'; a.fillRect(0, 0, 400, 160);
+    a.fillStyle = '#e2562b'; a.fillRect(0, 0, 400, 12); a.fillRect(0, 148, 400, 12);
+    a.textAlign = 'left'; a.fillStyle = '#1f1610'; a.font = '800 78px ' + DISPLAY; a.fillText('Кварта', 28, 98);
+    a.font = '500 21px ' + MONO; a.fillStyle = '#55463a'; a.fillText('ДРИП · 12 Г · ЭФИОПИЯ', 30, 132);
+    a.translate(335, 82); a.scale(1, 1.3); a.fillStyle = '#c28a46'; a.beginPath(); a.ellipse(0, 0, 26, 30, 0, 0, 2 * PI); a.fill();
+    a.strokeStyle = '#1f1610'; a.lineWidth = 4; a.lineCap = 'round'; a.beginPath(); a.moveTo(0, -27); a.bezierCurveTo(14, -13, -14, -5, 0, 7); a.bezierCurveTo(8, 14, -6, 20, 0, 26); a.stroke();
     a.restore();
     // stamp layer (same mapping as the bag label)
     b.save(); b.translate(360, 560); b.rotate(-0.16);

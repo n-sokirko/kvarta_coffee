@@ -110,7 +110,7 @@ export function Sub() {
           <div>
             <h2 style={{ margin: "0 0 14px" }}>Две пачки по 250 г раз в месяц</h2>
             <p className="price">54 <small>BYN / мес</small></p>
-        <img className="packimg" src="/pack.webp" alt="Две пачки кофе «Кварта» по 250 г" width="545" height="441" loading="lazy" decoding="async" />
+        <img className="packimg" src="/pack.webp" alt="Две пачки кофе «Кварта» по 250 г" width="545" height="437" loading="lazy" decoding="async" />
           </div>
           <div style={{ display: "grid", gap: "18px" }}>
             <ul>

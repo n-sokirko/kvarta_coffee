@@ -616,6 +616,51 @@
     return mb.mesh();
   }
 
+  /* ------------------------------------------- drip sachet and the box of ten */
+  var PAPER = [0.94, 0.92, 0.86];
+  function buildSachet() { // стоит на нижнем шве, центр в начале координат, высота 1.1 (уши сверху выше)
+    var mb = new MB(), W = 0.43, H = 0.55, T = 0.032, FOIL = [0.80, 0.62, 0.40];
+    mb.extrudeRounded([[-W, -H], [W, -H], [W, H], [-W, H]], -T, T, 0.012, 0.05, FOIL, 0.34);
+    // поперечные швы с рифлением внизу и вверху
+    [-H + 0.035, H - 0.035].forEach(function (y) {
+      mb.box(0, y, 0, W - 0.02, 0.03, T + 0.003, [0.70, 0.53, 0.34], 0.3, { bevel: 0.004 });
+      for (var k = -9; k <= 9; k++) mb.box(k * 0.043, y, 0, 0.007, 0.026, T + 0.006, [0.62, 0.46, 0.29], 0.3);
+    });
+    // лента с логотипом на обеих сторонах
+    [1, -1].forEach(function (s) {
+      var z = s * (T + 0.0035), w = W * 0.9, h = w * 160 / 400;
+      mb.decal([-w, -0.1, z], [w, -0.1, z], [w, -0.1 + 2 * h, z], [-w, -0.1 + 2 * h, z], K.ATLAS.band, s < 0, [0, 0, s]);
+    });
+    // бумажные уши для кружки: раскрыты V-образно
+    [-1, 1].forEach(function (s) {
+      mb.push(rotZ(s * 0.62), [s * 0.14, H - 0.02, 0]);
+      mb.box(s * 0.2, 0.0, 0, 0.21, 0.085, 0.007, PAPER, 0.15, { bevel: 0.003 });
+      mb.box(s * 0.2, 0.0, 0.0, 0.19, 0.003, 0.009, [0.82, 0.78, 0.68], 0.2);
+      mb.pop();
+    });
+    return mb.mesh();
+  }
+  function buildDripBox() { // стоит на дне, центр в начале координат, 1.1 x 1.32 x 0.5
+    var mb = new MB(), HX = 0.55, HY = 0.66, HZ = 0.25, KR = [0.85, 0.74, 0.54];
+    mb.box(0, 0, 0, HX, HY, HZ, KR, 0.16, { bevel: 0.016 });
+    // линия крышки и язычок
+    mb.box(0, 0.5, 0, HX + 0.002, 0.004, HZ + 0.002, [0.55, 0.42, 0.27], 0.2);
+    mb.box(0, 0.66, 0, 0.18, 0.003, HZ + 0.003, [0.55, 0.42, 0.27], 0.2);
+    // лицевая сторона
+    [1, -1].forEach(function (s) {
+      var z = s * (HZ + 0.003);
+      mb.decal([-0.52, -0.62, z], [0.52, -0.62, z], [0.52, 0.42, z], [-0.52, 0.42, z], K.ATLAS.box, s < 0, [0, 0, s]);
+    });
+    // торец с логотипом
+    [1, -1].forEach(function (s) {
+      var x = s * (HX + 0.003), zz = 0.21;
+      mb.decal([x, 0.05, s * zz], [x, 0.05, -s * zz], [x, 0.05 + zz, -s * zz], [x, 0.05 + zz, s * zz], K.ATLAS.logo, false, [s, 0, 0]);
+    });
+    return mb.mesh();
+  }
+
+  K.registerShape('sachet', buildSachet);
+  K.registerShape('dripBox', buildDripBox);
   K.registerShape('kettle', buildKettle);
   K.registerShape('wheel', buildWheel);
   K.registerShape('vanD', buildVan);
