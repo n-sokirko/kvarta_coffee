@@ -27,10 +27,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preload" as="image" href="/hero-poster.webp" type="image/webp" />
+        {/* шрифты не блокируют первую отрисовку: подключаются после загрузки */}
         <link
+          id="gf"
           rel="stylesheet"
+          media="print"
           href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Podkova:wght@500;700;800&display=swap"
         />
+        <script dangerouslySetInnerHTML={{ __html: "document.getElementById('gf').addEventListener('load',function(){this.media='all'})" }} />
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Podkova:wght@500;700;800&display=swap" />
+        </noscript>
       </head>
       <body>{children}</body>
     </html>
