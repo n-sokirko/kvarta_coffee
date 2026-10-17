@@ -16,11 +16,11 @@ const INTERESTS: { id: Exclude<Interest, ''>; label: string }[] = [
 export default function Lead() {
   const dedupe = useRef(kvCreateDedupe(10 * 60 * 1000));
   const sending = useRef(false);
-  const interestRef = useRef<Interest>('');
+  const interestRef = useRef<Interest>('order');
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [interest, setInterestState] = useState<Interest>('');
+  const [interest, setInterestState] = useState<Interest>('order');
   const [comment, setComment] = useState('');
   const [company, setCompany] = useState(''); // поле-ловушка для ботов
   const [errName, setErrName] = useState(false);
@@ -82,7 +82,7 @@ export default function Lead() {
       if (res.ok && data.status === 'ok') {
         dedupe.current.commit(e164, Date.now());
         setStatus('ok');
-        setName(''); setPhone(''); setInterest(''); setComment('');
+        setName(''); setPhone(''); setInterest('order'); setComment('');
       } else if (res.ok && data.status === 'duplicate') {
         dedupe.current.commit(e164, Date.now());
         setStatus('dup');

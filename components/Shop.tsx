@@ -33,7 +33,7 @@ export default function Shop() {
             <p className="words">{cur.words}</p>
             <p className="bl2">{cur.blurb}</p>
             <p className="pp"><span>{cur.name}</span><b>{cur.price}</b></p>
-            <PickLink interest="order" onlyIfEmpty className="btn">{TXT.shopBtn}</PickLink>
+            <PickLink interest="order" className="btn">{TXT.shopBtn}</PickLink>
           </div>
         </div>
       </div>
