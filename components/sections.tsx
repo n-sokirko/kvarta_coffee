@@ -1,3 +1,4 @@
+import { PickLink } from './PickLink';
 // Сгенерировано из прототипа artifact/Main.dc.html (статические секции), дальше правится вручную.
 
 export function Header() {
@@ -101,7 +102,7 @@ export function Fresh() {
   );
 }
 
-export function Sub({ pickSub }: { pickSub: () => void }) {
+export function Sub() {
   return (
     <section className="sub" id="subscription">
       <div className="wrap">
@@ -115,7 +116,7 @@ export function Sub({ pickSub }: { pickSub: () => void }) {
               <li>Доставка бесплатно</li>
               <li>Оставьте заявку, а какой кофе вам привозить, обсудим по телефону.</li>
             </ul>
-            <div><a className="btn" style={{ background: "var(--ink)", borderColor: "var(--ink)", color: "var(--cream)" }} href="#lead" onClick={pickSub}>Подписаться</a></div>
+            <div><PickLink interest="subscription" className="btn" style={{ background: "var(--ink)", borderColor: "var(--ink)", color: "var(--cream)" }}>Подписаться</PickLink></div>
           </div>
         </div>
       </div>
