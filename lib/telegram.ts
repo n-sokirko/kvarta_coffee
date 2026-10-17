@@ -3,6 +3,13 @@ import type { Lead } from './store';
 const LABEL = { subscription: 'Подписка', order: 'Разовый заказ', question: 'Вопрос' } as const;
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+function orderText(lead: Lead): string {
+  if (!lead.items || !lead.items.length) return '';
+  const rows = lead.items.map((i) => '• ' + esc(i.name) + ' × ' + i.qty + ' = ' + i.qty * i.price + ' BYN');
+  const delivery = lead.total >= 50 ? 'доставка бесплатно' : 'меньше 50 BYN, доставку согласуем';
+  return 'Заказ:\n' + rows.join('\n') + '\nИтого: ' + lead.total + ' BYN (' + delivery + ')';
+}
+
 /** Дублирует заявку в Telegram, если заданы TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID. Ошибка не ломает заявку. */
 export async function notifyTelegram(lead: Lead): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -16,6 +23,7 @@ export async function notifyTelegram(lead: Lead): Promise<void> {
     'Имя: ' + esc(lead.name),
     'Телефон: ' + esc(lead.phone),
     'Интересует: ' + LABEL[lead.interest],
+    orderText(lead),
     lead.comment ? 'Комментарий: ' + esc(lead.comment) : '',
     'Откуда: ' + esc(from),
     s.landing ? 'Страница входа: ' + esc(s.landing) : '',

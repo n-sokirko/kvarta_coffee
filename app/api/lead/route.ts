@@ -40,6 +40,8 @@ export async function POST(req: Request) {
       phone: p.e164,
       interest: p.interest,
       comment: p.comment,
+      items: p.items,
+      total: p.total,
       source: p.source,
       userAgent: (req.headers.get('user-agent') || '').slice(0, 200),
     };

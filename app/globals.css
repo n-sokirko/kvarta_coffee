@@ -229,3 +229,16 @@ footer.ft { padding: 28px 0 40px; background: var(--ink); color: rgba(248, 241, 
 .kv.kv-live .hero-art { background-image: none; }
 
 .packimg { display: block; width: min(100%, 320px); height: auto; margin-top: 10px; filter: drop-shadow(0 10px 14px rgba(31, 22, 16, .25)); }
+
+.ord { display: grid; gap: 8px; }
+.oi { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 2px solid rgba(31, 22, 16, .35); border-radius: 10px; background: #fffdf8; }
+.oi.on { border-color: var(--ink); }
+.oi-t { display: grid; gap: 2px; min-width: 0; }
+.oi-t b { font: 700 16px/1.25 var(--fb); }
+.oi-t span { font-size: 14px; color: var(--ink2); }
+.oi-q { display: flex; align-items: center; gap: 4px; flex: none; }
+.oi-q button { width: 44px; height: 44px; border: 2px solid var(--ink); border-radius: 50%; background: transparent; font: 600 22px/1 var(--fb); cursor: pointer; }
+.oi-q button:disabled { opacity: .3; cursor: default; }
+.oi-q output { min-width: 28px; text-align: center; font: 600 18px/1 var(--fm); }
+.ord-sum { margin-top: 10px; font-size: 15px; font-weight: 500; }
+.fld.bad .oi { border-color: #a8311b; }

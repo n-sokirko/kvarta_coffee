@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PHONE_ERR, TXT } from '@/lib/content';
 import { kvNormalizePhone, kvFormatPhoneInput, kvCreateDedupe } from '@/lib/phone';
 import { getSource } from '@/lib/source';
+import { CATALOG, FREE_DELIVERY_FROM, MAX_QTY } from '@/lib/catalog';
 
 type Status = 'form' | 'sending' | 'ok' | 'dup' | 'fail';
 type Interest = '' | 'subscription' | 'order' | 'question';
@@ -26,7 +27,15 @@ export default function Lead() {
   const [errName, setErrName] = useState(false);
   const [errPhone, setErrPhone] = useState('');
   const [errInterest, setErrInterest] = useState(false);
+  const [qty, setQty] = useState<Record<string, number>>({});
+  const [errItems, setErrItems] = useState(false);
   const [status, setStatus] = useState<Status>('form');
+  const total = CATALOG.reduce((sum, c) => sum + (qty[c.id] || 0) * c.price, 0);
+  const chosen = CATALOG.filter((c) => (qty[c.id] || 0) > 0);
+  const step = (id: string, d: number) => {
+    setQty((q) => ({ ...q, [id]: Math.max(0, Math.min(MAX_QTY, (q[id] || 0) + d)) }));
+    setErrItems(false);
+  };
 
   const setInterest = (v: Interest) => {
     interestRef.current = v;
@@ -52,11 +61,13 @@ export default function Lead() {
     const ph = kvNormalizePhone(phone);
     const badPhone = ph.ok ? '' : PHONE_ERR[ph.reason || 'format'] || PHONE_ERR.format;
     const badInterest = !interest;
-    if (badName || badPhone || badInterest) {
+    const badItems = interest === 'order' && total === 0;
+    if (badName || badPhone || badInterest || badItems) {
+      setErrItems(badItems);
       setErrName(badName);
       setErrPhone(badPhone);
       setErrInterest(badInterest);
-      const id = badName ? 'f-name' : badPhone ? 'f-phone' : '';
+      const id = badName ? 'f-name' : badPhone ? 'f-phone' : badItems ? 'order-box' : '';
       if (id) document.getElementById(id)?.focus();
       return;
     }
@@ -75,14 +86,14 @@ export default function Lead() {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, phone, interest, comment, company, source: getSource() }),
+        body: JSON.stringify({ name, phone, interest, comment, company, source: getSource(), items: interest === 'order' ? chosen.map((c) => ({ id: c.id, qty: qty[c.id] })) : [] }),
         signal: ctrl.signal,
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.status === 'ok') {
         dedupe.current.commit(e164, Date.now());
         setStatus('ok');
-        setName(''); setPhone(''); setInterest('order'); setComment('');
+        setName(''); setPhone(''); setInterest('order'); setComment(''); setQty({});
       } else if (res.ok && data.status === 'duplicate') {
         dedupe.current.commit(e164, Date.now());
         setStatus('dup');
@@ -92,6 +103,7 @@ export default function Lead() {
         if (data.field === 'phone') setErrPhone(PHONE_ERR[data.reason] || PHONE_ERR.format);
         if (data.field === 'name') setErrName(true);
         if (data.field === 'interest') setErrInterest(true);
+        if (data.field === 'items') setErrItems(true);
         setStatus('form');
       } else {
         dedupe.current.rollback(e164);
@@ -146,6 +158,30 @@ export default function Lead() {
                 </div>
                 {errInterest && <p className="err">{TXT.interestErr}</p>}
               </fieldset>
+              {interest === 'order' && (
+                <fieldset className={'fld order' + (errItems ? ' bad' : '')} id="order-box" tabIndex={-1}>
+                  <legend>Что заказать</legend>
+                  <div className="ord">
+                    {CATALOG.map((c) => {
+                      const n = qty[c.id] || 0;
+                      return (
+                        <div className={'oi' + (n ? ' on' : '')} key={c.id}>
+                          <div className="oi-t"><b>{c.name}</b><span>{c.unit}, {c.price}{' '}BYN</span></div>
+                          <div className="oi-q" role="group" aria-label={'Количество: ' + c.name}>
+                            <button type="button" onClick={() => step(c.id, -1)} disabled={n === 0} aria-label="Убрать одну">−</button>
+                            <output aria-live="polite">{n}</output>
+                            <button type="button" onClick={() => step(c.id, 1)} disabled={n >= MAX_QTY} aria-label="Добавить одну">+</button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="ord-sum">
+                    {total > 0 ? 'Итого ' + total + ' BYN. ' + (total >= FREE_DELIVERY_FROM ? 'Доставка бесплатно.' : 'Бесплатная доставка от ' + FREE_DELIVERY_FROM + ' BYN.') : 'Бесплатная доставка от ' + FREE_DELIVERY_FROM + ' BYN.'}
+                  </p>
+                  {errItems && <p className="err">Выберите хотя бы одну позицию.</p>}
+                </fieldset>
+              )}
               <div className="fld">
                 <label htmlFor="f-comment">{TXT.commentLabel}</label>
                 <textarea id="f-comment" name="comment" placeholder={TXT.commentPh} value={comment} onChange={(e) => setComment(e.target.value)} />

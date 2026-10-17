@@ -9,6 +9,8 @@ export type Lead = {
   phone: string;
   interest: 'subscription' | 'order' | 'question';
   comment: string;
+  items: { id: string; name: string; qty: number; price: number }[];
+  total: number;
   source: Record<string, string>;
   userAgent: string;
 };
