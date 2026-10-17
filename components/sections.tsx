@@ -10,10 +10,10 @@ export function Header() {
           <span>Кварта</span>
         </a>
         <nav className="nav" aria-label="Разделы">
-          <a href="#coffee">Кофе</a>
-          <a href="#delivery">Доставка</a>
-          <a href="#subscription">Подписка</a>
           <a href="#about">О нас</a>
+          <a href="#coffee">Кофе</a>
+          <a href="#subscription">Подписка</a>
+          <a href="#delivery">Доставка</a>
         </nav>
         <a className="btn btn-s" href="#lead">Оставить заявку</a>
       </div>
@@ -198,11 +198,14 @@ export function About() {
   return (
     <section className="about" id="about">
       <div className="wrap about-in">
+        <figure className="about-ph">
+          <img src="/about.webp" alt="Аня и Дмитрий в обжарочной, за спиной печь и мешки с зелёным кофе" width="900" height="823" loading="lazy" decoding="async" />
+          <div className="seal" aria-hidden="true"><div><b>2019</b>Минск</div></div>
+        </figure>
         <div>
-          <h2 style={{ marginBottom: "20px" }}>Мы, Аня и Дмитрий, раньше работали бариста</h2>
-          <p>С 2019 года жарим кофе партиями по 5 кг.</p>
+          <h2 style={{ marginBottom: "20px" }}>Мы, Аня и Дмитрий, раньше работали бариста</h2>
+          <p>С 2019 года жарим кофе партиями по 5 кг.</p>
         </div>
-        <div className="seal" aria-hidden="true"><div><b>2019</b>Минск</div></div>
       </div>
     </section>
   );

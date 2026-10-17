@@ -9,13 +9,13 @@ export default function Page() {
     <ScenesRoot>
       <Header />
       <Hero />
+      <About />
       <SceneA />
       <Fresh />
       <Shop />
       <Sub />
       <SceneB />
       <Meth />
-      <About />
       <Lead />
       <Footer />
     </ScenesRoot>
