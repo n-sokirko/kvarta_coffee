@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node logic/kv-lead.test.js && node test/lead-api.test.mjs"
+    "test": "node logic/kv-lead.test.js",
+    "test:api": "node test/lead-api.test.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.34.0",
