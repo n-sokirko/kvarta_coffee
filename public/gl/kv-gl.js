@@ -229,7 +229,7 @@
       var k = nz > 0 ? BAG_KRAFT : BAG_KRAFT_B, c = [k[0], k[1], k[2]], gl = 0.18, metal = 0;
       var seal = smoothstep(0.585, 0.6, y) * 0.0; // the roll keeps the kraft colour; shading does the work
       var tie = smoothstep(0.715, 0.73, y) * (1 - smoothstep(0.775, 0.79, y));
-      if (tie > 0) { c = [mix(c[0], 0.72, tie), mix(c[1], 0.72, tie), mix(c[2], 0.74, tie)]; gl = mix(gl, 0.85, tie); metal = tie; }
+      if (tie > 0) { c = [mix(c[0], c[0] * 0.62, tie), mix(c[1], c[1] * 0.62, tie), mix(c[2], c[2] * 0.62, tie)]; gl = mix(gl, 0.3, tie); metal = tie * 0.22; } // сгиб сверху: тот же крафт, чуть темнее, без блестящей фольги
       var vm = nz < 0 ? 1 - smoothstep(0.075, 0.09, Math.hypot(x, y - 0.38)) : 0;
       if (vm > 0) { c = [mix(c[0], 0.92, vm), mix(c[1], 0.92, vm), mix(c[2], 0.9, vm)]; gl = mix(gl, 0.45, vm); }
       o[0] = c[0]; o[1] = c[1]; o[2] = c[2]; o[3] = gl; o[4] = 0; o[5] = metal;

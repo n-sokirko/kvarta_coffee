@@ -78,7 +78,7 @@ body { margin: 0; background: #f3eee5; }
 .week-cap li:first-child::before { background: var(--flame); }
 
 /* pinned scenes */
-.scene { position: relative; height: calc(var(--sh, 760px) * 4.4); background: var(--paper); }
+.scene { position: relative; height: calc(var(--sh, 760px) * 4.4); background: var(--bg, var(--paper)); }
 .sB { height: calc(var(--sh, 760px) * 5.2); }
 .stage { position: sticky; top: 56px; height: calc(var(--sh, 760px) - 56px); overflow: hidden; background: var(--bg, #e9e0cc); color: var(--tx, var(--ink)); transition: color .3s ease; }
 .sA[data-step="3"], .sA[data-step="4"] { --tx: var(--cream); }
